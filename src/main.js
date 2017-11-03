@@ -62,11 +62,7 @@ class LINE extends LineAPI {
             }
 
          }
-      
-         /*if(operation.type == 25 || operation.type == 26) {
-                this._client.removeAllMessages(operation.param1);
-         }*/
-      
+   
          if(operation.type == 17 && this.stateStatus.kick == 1) { //notif accept group invitation
              if(!isAdminOrBot(operation.param2)) {
                  this._kickMember(operation.param1,[operation.param2]);
@@ -205,18 +201,6 @@ class LINE extends LineAPI {
            // this._sendMessage(seq,`Hanya akses admin`);
         }//}
     }
- 
-    //setState(seq) {
-   //     if(isAdminOrBot(seq.from)){
-      //      let [ actions , status ] = seq.text.split(' ');
-      //      const action = actions.toLowerCase();
-      //      const state = status.toLowerCase() == 'on' ? 1 : 0;
-      //      this.stateStatus[action] = state;
-     //       this._sendMessage(seq,`Status: \n${JSON.stringify(this.stateStatus)}`);
-  //      } else {
-   //         this._sendMessage(seq, `Lu bukan admin bego 😂`);
-  //        }
- //   }
 
     mention(listMember) {
         let mentionStrings = [''];
@@ -281,104 +265,13 @@ class LINE extends LineAPI {
         payload = payload.join(' ');
         let txt = textMessages.toLowerCase();
         let messageID = seq.id;
-    
-      /*  var date = new Date();
-
-        var bulanku = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        var hariku = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum&#39;at', 'Sabtu'];
-        var tanggal = date.getDate();
-        var bulan = date.getMonth(),
-            bulan = bulanku[bulan];
-        var hariIni = date.getDay(),
-            hariIni = hariku[hariIni];
-        var tahun = date.getFullYear();
-
-        if(txt == 'dat' || txt == 'date and time' && isAdminOrBot(seq.from)) {
-            let menit = ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50','51','52','53','54','55','56','57','58','59','00'];
-            let jam = ['11','12','13','14','15','16','17','18','19','20','21','23','00','01','02','03','04','05','06','07','08','09','10','11'];
-            let hh = jam[date.getHours()];
-            let mm = menit[date.getMinutes()];
-            let ss = menit[date.getSeconds()];
-            this._sendMessage(seq, `🔘 Pukul, ${hh} : ${mm} : ${ss} WIB\n\n🔘 ${hariIni}, ${tanggal} ${bulan} ${tahun}`);
-        }
-      
-      
+   
         var group = await this._getGroup(seq.to);
-      
-        if(txt == 'gcreator') {
-            let creator = group.creator.mid;
-            seq.contentType=13;
-            seq.contentMetadata = { mid: `${creator}` };
-            this._client.sendMessage(1, seq);
-        }
-        
-        var  group = await this._getGroup(seq.to);
-    
-        if(txt == 'ginfo') {
-            let name = group.name;
-            let id = group.id;
-            let creator = group.creator.displayName;
-            let members = group.members.length;
-            this._sendMessage(seq, `🔘Nama Group :\n   ${name}\n\n🔘ID Group :\n   ${id}\n\n🔘Creator Group :\n   ${creator}\n\n🔘Jumlah Member :\n    ${members}`);
-        }*/
-      
-        var protect_qr=await this._getGroup(seq.to);
-      
-        if(protect_qr.preventJoinByTicket==false && this.stateStatus.qr == 1 &&!isAdminOrBot(seq.from)) {
-         //   this._sendMessage(seq, 'Hayoo Mau Ngapain? 😛');
-            protect_qr.preventJoinByTicket=true;
-            await this._updateGroup(protect_qr);
-            this.client.sendMessage(0, seq)
-        }
-                         
-       /* if(cmd == 'cancel') {
-            if(payload == 'group') {
-                let groupid = await this._getGroupsInvited();
-                for (let i = 0; i < groupid.length; i++) {
-                    this._rejectGroupInvitation(groupid[i]);                    
-                }
-                return;
-            }
-          
-            if(this.stateStatu.cancel == 1) {
-                this.cancelAll(seq.to);
-            }
-        }
-                 
-        /*if(txt == 'creator') {
-            seq.contentType=13;
-            seq.contenPreview= null,
-            seq.contentMetadata = { mid: seq.from };
-            this._client.sendMessage(1, seq);
-        }
-      
-        if(txt == 'r') {
-            this._sendMessage(seq, 'Siap Bosq 👮');
-        }
-      
-       /* if(txt == 'status' || txt == 's:status' && isAdminOrBot(seq.from)) {
-            this._sendMessage(seq,`<==== ☆ Status ☆ ====> \n${JSON.stringify(this.stateStatus)}`);
-        }*/
-      
-        if(txt == 'rn' || txt == 'responsename' && isAdminOrBot(seq.from)) {
-            this._sendMessage(seq, 'Şапjі');
-        }
-
-      /*	if(txt == 'help') {
-	          this._sendMessage(seq, '[ All Members ]\n¤ rn [responsename]\n¤ creator\n¤ myid\n¤ sp [speed]\n¤ set [setpoint]\n¤ read\n¤ reset\n¤ /ourl | /curl\n¤ gift c\n¤ ginfo\n¤ gcreator\n¤ join <linkgroup>\n¤ dat [date and time]');//\n☆ [ Only The Owner ] ☆\n▫ status\n▫ protection on/off\n▫ kickall\n▫ kill @\n▫ cancel\n▫ tagall\n▫ spam\n▫bc [j/kata]▫ bye all\n\n  န[Admin : Rіzəя]န');
-      	}
-      
-        if(txt == 'cm' && isAdminOrBot(seq.from)) {
-	          this._sendMessage(seq, '☆ [ Only The Owner ] ☆\n=======\nS:command\n=======\n▫ status\n▫ protection on/off\n▫ kickall\n▫ kill @\n▫ cancel\n▫ tagall\n▫ spam\n▫ bc [j/kata]\n▫ bye all\n\n      န[Admin : Rіzəя]န');
-      	}
-      
-        /*if(txt == 'gift c' || txt == 'gift all') {
-            seq.contentType = 9
-            seq.contentMetadata = {'PRDID': 'a9ed993f-a4d8-429d-abc0-2692a319afde','PRDTYPE': 'THEME','MSGTPL': '8'};
-            this._client.sendMessage(1, seq);
-        }*/
-       
-       
+  
+        if(txt == 'rn' && isAdminOrBot(seq.from)) {
+            this._sendMessage(seq, 'Ready');
+        }    
+	    
         if(txt == 'sp' && isAdminOrBot(seq.from)) {
             const curTime = (Date.now() / 9000);
           //  await this._sendMessage(seq,'Read Time');
@@ -395,45 +288,11 @@ class LINE extends LineAPI {
             }
         }
     
-      /*  if(txt == 'setpoint' || txt == 'set') {
-            this._sendMessage(seq, `Read point telah di set!`);
-            this.removeReaderByGroup(seq.to);
-        }
-
-        if(txt == 'reset') {
-            this.checkReader = []
-            this._sendMessage(seq, `Read point telah di reset!`);
-        }
-          
-        if(txt == 'read') {
-            let rec = await this.check(this.checkReader,seq.to);
-            const mentions = await this.mention(rec);
-            seq.contentMetadata = mentions.cmddata;
-            await this._sendMessage(seq,mentions.names.join(''));
-        }*/
-
         const action = ['cancel on','cancel off','kick on','kick off','protection on','protection off','qr on','qr off']
         if(action.includes(txt)) {
             this.setState(seq);
         }
           
-       /* if(txt == 'myid') {
-            this._sendMessage(seq,`Your ID: ${seq.from}`);
-        }*/
-
-        const joinByUrl = ['ourl','curl'];
-        if(joinByUrl.includes(txt)) {
-          //  this._sendMessage(seq,`Updating group ...`);
-            let updateGroup = await this._getGroup(seq.to);
-            updateGroup.preventJoinByTicket = true;
-            if(txt == 'ourl' && isAdminOrBot(seq.from)) {
-                updateGroup.preventJoinByTicket = false;
-                const groupUrl = await this._reissueGroupTicket(seq.to);
-                this._sendMessage(seq,`Link group = http://line.me/R/ti/g/${groupUrl}`);
-            }
-            await this._updateGroup(updateGroup);
-        }
-      
         if(cmd == 'kill' && isAdminOrBot(seq.from)){
            let target = payload.replace('@','');
            let group = await this._getGroups([seq.to]);
@@ -452,27 +311,13 @@ class LINE extends LineAPI {
             await this._acceptGroupInvitationByTicket(id,ticketId);
         }
 
-      /*  if(cmd == 'spm' && isAdminOrBot(seq.from)) { // untuk spam invite contoh: spm <mid>
-            for (var i = 0; i < 4; i++) {
-	             await this._getAllContactIds();
-                   this._createGroup(4,'SPAM',seq.to);
-            }
-        }*/
-
         if(cmd == 'spam' || cmd == 'S:spam' && isAdminOrBot(seq.from)) {
             for(var i = 0; i < 100;  i++) {
                 this._sendMessage(seq,'Boda Amat Gua Gak Liat😅');
             }
         }
       
-      /*  if(txt == 'tagall' && isAdminOrBot(seq.from)) {
-            let rec = await this._getGroup(seq.to);
-            const mentions = await this.mention(rec.members);
-            seq.contentMetadata = mentions.cmddata;
-            await this._sendMessage(seq,mentions.names.join(''));
-        }*/
-      
-        if(cmd == 'bc' || cmd == 'S:bc' && isAdminOrBot(seq.from)) {
+        if(cmd == 'bc'&& isAdminOrBot(seq.from)) {
             const [  j, kata ] = payload.split(':');
             for (var i=0; i <j; i++) {
             this._sendMessage(seq,`${kata}`);
@@ -480,8 +325,6 @@ class LINE extends LineAPI {
         }
       
         if(txt == 'bye all' && isAdminOrBot(seq.from)) {
-        //  let name = group.name;
-         // let txt = await this._sendMessage(seq, `GOOD BYE ${name}`);
           this._leaveGroup(seq.to);
         }
       
